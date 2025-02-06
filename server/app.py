@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from flask_bcyrpt import Bcrypt
 # Standard library imports
 from models import User, Pet, Favorite
 # Remote library imports
@@ -13,7 +12,6 @@ from config import app, db, api
 
 #ROUTES NEEDED
 # POST /users NEEDS WORK
-# PATCH /pets/<int:id>
 
 @app.route('/')
 def index():
