@@ -10,20 +10,26 @@ class Favorite(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
 
+    users = db.relationship('User', back_populates='favorites')
+    pets = db.relationship('Pet', back_populates='favorites')
+
 class Admin(db.Model, SerializerMixin):
     __tablename__ = 'admin_table'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class User(db.Model, SerializerMixin):
-    __tablename__ = 'users'
+    __tablename__ = 'user_table'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String(50), nullable=False)
     password_hash = db.Column(db.String(50), nullable=False)
+    
+    favorites = db.relationship('Favorite', back_populates='user')
+    pets = association_proxy('favorites', 'pet')
 
 class Pet(db.Model, SerializerMixin):
-    __tablename__ = 'pets'
+    __tablename__ = 'pet_table'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable)
     age = db.Column(db.Integer)
@@ -31,5 +37,8 @@ class Pet(db.Model, SerializerMixin):
     breed = db.Column(db.String(50))
     img_url = db.Column(db.String(50))
     adoption_status = db.Column(db.String(50))
+
+    favorites = db.relationship('Favorite', back_populates='pet')
+    users = association_proxy('favorites', 'user')
 
 
