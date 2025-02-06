@@ -17,13 +17,13 @@ from config import app, db, api
 def index():
     return '<h1>Project Server</h1>'
 
-@app.get ('/users')
+@app.get('/users')
 def all_users():
     users = User.query.all()
     users_json = [user.to_dict() for user in users]
     return make_response(jsonify(users_json), 200)
 
-@app.get ('/users/<int:id>')
+@app.get('/users/<int:id>')
 def user_by_id(id):
     user = User.query.get(id)
     if user:
