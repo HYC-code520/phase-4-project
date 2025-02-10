@@ -1,3 +1,10 @@
 // Everything a user have
 // Need to log in first to apply for the adoption
 // Need adoption button
+
+function AdoptionForm() {
+    return <div>Adoption Form</div>;
+  }
+  
+  export default AdoptionForm;
+  
