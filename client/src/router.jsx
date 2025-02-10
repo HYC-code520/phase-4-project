@@ -5,18 +5,18 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "./components/MainLayout";
 
 // Import page components
-import Home from "./pages/Home";
+import Home from "./components/Home";
 import Pets from "./pages/Pets";
-import Dogs from "./pages/Dogs";
-import Cats from "./pages/Cats";
-import OtherAnimals from "./pages/OtherAnimals";
-import PetProfile from "./pages/PetProfile";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Dogs from "./components/Dogs";
+import Cats from "./components/Cats";
+import OtherAnimals from "./components/OtherAnimals";
+import PetCard from "./components/PetCard";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Favorites from "./pages/Favorites";
-import NotFound from "./pages/NotFound";
+import NotFound from "./components/NotFound";
 
 // Define application routes
 const routes = createBrowserRouter([
@@ -35,7 +35,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "pets/:id", // "/pets/:id" for individual pet profiles
-        element: <PetProfile />,
+        element: <PetCard />,
       },
       {
         path: "dogs", // "/dogs" page showing only dogs
