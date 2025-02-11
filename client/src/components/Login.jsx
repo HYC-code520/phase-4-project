@@ -45,8 +45,8 @@ function Login() {
       })
       .then((data) => {
         console.log("Login successful:", data);
-        // Redirect the user to a protected route (e.g., "/dashboard") after successful login
-        navigate("/dashboard"); //we need to figure out where user will be redirected after login
+        // Redirect the user to a protected route ("/") after successful login
+        navigate("/"); 
       })
       .catch((error) => {
         console.error("Error logging in:", error);
