@@ -25,7 +25,7 @@ function Login() {
     event.preventDefault();
 
     // Sends a POST request to the Flask backend's /login endpoint with the form data
-    fetch("http://localhost:5555/login", {
+    fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Tells the server that we're sending JSON
@@ -45,8 +45,8 @@ function Login() {
       })
       .then((data) => {
         console.log("Login successful:", data);
-        // Redirect the user to a protected route ("/") after successful login
-        navigate("/"); 
+        // Redirect the user to a protected route ( "/") after successful login
+        navigate("/"); //we need to figure out where user will be redirected after login
       })
       .catch((error) => {
         console.error("Error logging in:", error);

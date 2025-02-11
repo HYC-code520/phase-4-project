@@ -14,19 +14,19 @@ def find_user_by_id(id):
     return User.query.get(id)
 
 # Root route to verify the server is running
-@app.route('/')
+@app.route('/api')
 def index():
     return '<h1>Project Server</h1>'
 
 # Retrieve all users (excluding password hashes for security)
-@app.get('/users')
+@app.get('/api/users')
 def all_users():
     users = User.query.all()
     users_json = [user.to_dict(rules=("-password_hash",)) for user in users]
     return jsonify(users_json), 200
 
 # Retrieve a specific user by ID
-@app.get('/users/<int:id>')
+@app.get('/api/users/<int:id>')
 def user_by_id(id):
     user = find_user_by_id(id)
     if user:
@@ -34,7 +34,7 @@ def user_by_id(id):
     return jsonify({'error': 'User not found'}), 404
 
 # Create a new user (password is hashed using Flask-Bcrypt via the property setter)
-@app.post('/users')
+@app.post('/api/users')
 def create_user():
     try:
         body = request.get_json()
@@ -54,7 +54,7 @@ def create_user():
         return jsonify({'error': str(e)}), 400
 
 # Admin login route - stores user session
-@app.post('/login')
+@app.post('/api/login')
 def login():
     body = request.get_json()
     user = User.query.filter_by(email=body.get('email')).first()
