@@ -152,5 +152,60 @@ def delete_pet(id):
         return {}, 204  # No Content
     return jsonify({'error': 'Pet not found'}), 404
 
+def find_adoption_form_by_id(id):
+    return AdoptionForm.get(id)
+
+@app.get('/adoption_forms')
+def all_adoption_form():
+    adoption_form = AdoptionForm.query.all()
+    user_json = [adoption_form.to_dict() for adoption_form in adoption_forms]
+    return jsonify(adoption_forms_json), 200
+
+
+@app.get('/adoption_forms/<int:id>')
+def adoption_form_by_id(id):
+    adoption_form = find_adoption_form_by_id(id)
+    if user:
+        return jsonify(user.to_dict()), 200
+    return jsonify({'error': 'From not found'}), 404
+
+
+@app.post('/adoption_forms')
+def create_adoption_form():
+    try:
+        body = request.get_json()
+
+        #To ensure required fields are presented
+        required_field = ['full_name', 'email', 'phone_number', 'address', 'user_id', 'pet_id']
+        for field in required_field:
+            if not body.get(field):
+                return jsonify({'error': f'{field} is required'}), 400
+
+
+        new_adoption_form = AdoptionForm(
+            full_name=body.get('full_name'),
+            email=body.get('email'),
+            phone_number=body.get('phone_number'),
+            address=body.get('address'),
+            residence_type=body.get('residence_type'),
+            family_members=body.get('householdMembers'),
+            has_other_pets=body.get('otherPets') == 'yes',
+            pet_alone_hours=body.get('petAloneHours'),
+            pet_sleeping_place=body.get('petSleepingPlace'),
+            has_previous_adoption=body.get('previousAdoption') == 'yes',
+            user_id=body.get('user_id'),  # Ensure this is passed or set properly
+            pet_id=body.get('pet_id')        
+            submitted_at=datetime.now(),  # Automatically set the submission time
+            status='pending'  # Default status    
+        )
+        db.session.add(new_adoption_form)
+        db.session.commit()
+        return jsonify(new_adoption_form.to_dict()), 201
+        
+    except Exception:
+        db.session.rollback()  # Rollback in case of error
+        print(f"Error creating adoption form: {e}")  # Log the error for debugging
+        return jsonify({'error': 'Invalid request'}), 400
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
