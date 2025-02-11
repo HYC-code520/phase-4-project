@@ -1,7 +1,4 @@
-// Import React Router function to create routes
 import { createBrowserRouter } from "react-router-dom";
-
-// Import page components
 import App from "./App";
 import Dogs from "./components/Dogs";
 import Cats from "./components/Cats";
@@ -11,42 +8,72 @@ import Signup from "./components/Signup";
 import Favorites from "./components/Favorites";
 import NotFound from "./components/NotFound";
 
-// Define application routes
 const routes = createBrowserRouter([
-    
-      {
-        path: "/", // Root path ("/") handled by Home
-        element: <App />,
-      },
-      {
-        path: "/dogs", // "/dogs" page showing only dogs
-        element: <Dogs />,
-      },
-      {
-        path: "/cats", // "/cats" page showing only cats
-        element: <Cats />,
-      },
-      {
-        path: "/other-animals", // "/other-animals" page for other pets
-        element: <OtherAnimals />,
-      },
-      {
-        path: "/favorites", // "/favorites" page for saved pets
-        element: <Favorites />,
-      },
-      {
-        path: "/login", // "/login" page
-        element: <Login />,
-      },
-      {
-        path: "/signup", // "/signup" page
-        element: <Signup />,
-      },
-      { 
-        path: "*", 
-        element: <NotFound /> 
-      }, // Catch-all for 404
-    ],
-);
+  {
+    path: "/",
+    element: (
+      <App>
+        <h1>Welcome to the Pet Adoption App! 🐶🐱</h1>
+        <p>Find your next furry friend today!</p>
+      </App>
+    ),
+  },
+  {
+    path: "/dogs",
+    element: (
+      <App>
+        <Dogs />
+      </App>
+    ),
+  },
+  {
+    path: "/cats",
+    element: (
+      <App>
+        <Cats />
+      </App>
+    ),
+  },
+  {
+    path: "/other-animals",
+    element: (
+      <App>
+        <OtherAnimals />
+      </App>
+    ),
+  },
+  {
+    path: "/favorites",
+    element: (
+      <App>
+        <Favorites />
+      </App>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <App>
+        <Login />
+      </App>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <App>
+        <Signup />
+      </App>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <App>
+        <NotFound />
+      </App>
+    ),
+  },
+]);
 
 export default routes;
