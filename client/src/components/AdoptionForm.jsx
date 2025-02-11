@@ -5,7 +5,7 @@
 import { useState } from "react";
 
 function AdoptionForm() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     petName: "",
     fullName: "",
     email: "",
@@ -20,7 +20,11 @@ function AdoptionForm() {
     petAloneHours: 0,
     petSleepingPlace: "",
     previousAdoption: "no",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState({}); // To store form validation errors
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -30,53 +34,86 @@ function AdoptionForm() {
     });
   }
 
+////// The validation here is for the front end and user to see
+
+
+  function validateForm() {
+    let formErrors = {};
+    if (!formData.petName) formErrors.petName = "Pet name is required.";
+    if (!formData.fullName) formErrors.fullName = "Full name is required.";
+    if (!formData.email.includes("@")) formErrors.email = "Please enter a valid email.";
+    if (!formData.phoneNumber) formErrors.phoneNumber = "Phone number is required.";
+    if (!formData.address) formErrors.address = "Address is required.";
+    if (!formData.city) formErrors.city = "City is required.";
+    if (!formData.state) formErrors.state = "State is required.";
+    if (!formData.zip) formErrors.zip = "Zip code is required.";
+    return formErrors;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("Adoption form submitted:", formData);
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors); // Show errors to the user
+    } else {
+      setErrors({});
+      setIsSubmitted(true);
+      console.log("Adoption form submitted:", formData);
+      setFormData(initialFormData); // Reset form after submission
+    }
   }
 
   return (
     <div>
       <h2>Adoption Form</h2>
+      {isSubmitted && <p style={{ color: "green" }}>Form submitted successfully!</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Pet Name:
           <input type="text" name="petName" value={formData.petName} onChange={handleChange} />
+          {errors.petName && <p style={{ color: "red" }}>{errors.petName}</p>}
         </label>
         <br />
         <label>
           Full Name:
           <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+          {errors.fullName && <p style={{ color: "red" }}>{errors.fullName}</p>}
         </label>
         <br />
         <label>
           Email:
           <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </label>
         <br />
         <label>
           Phone Number:
           <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+          {errors.phoneNumber && <p style={{ color: "red" }}>{errors.phoneNumber}</p>}
         </label>
         <br />
         <label>
           Address:
           <input type="text" name="address" value={formData.address} onChange={handleChange} />
+          {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
         </label>
         <br />
         <label>
           City:
           <input type="text" name="city" value={formData.city} onChange={handleChange} />
+          {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
         </label>
         <br />
         <label>
           State:
           <input type="text" name="state" value={formData.state} onChange={handleChange} />
+          {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
         </label>
         <br />
         <label>
           Zip Code:
           <input type="text" name="zip" value={formData.zip} onChange={handleChange} />
+          {errors.zip && <p style={{ color: "red" }}>{errors.zip}</p>}
         </label>
         <br />
         <label>
