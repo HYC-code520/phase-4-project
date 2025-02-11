@@ -4,10 +4,12 @@
 from flask import request, jsonify, session
 from flask_restful import Api, Resource
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime
+
 
 # Local imports
 from config import app, db, api
-from models import User, Pet, Favorite
+from models import User, Pet, Favorite, AdoptionForm
 
 # Helper function to find a user by ID
 def find_user_by_id(id):
@@ -153,20 +155,20 @@ def delete_pet(id):
     return jsonify({'error': 'Pet not found'}), 404
 
 def find_adoption_form_by_id(id):
-    return AdoptionForm.get(id)
+    return AdoptionForm.query.get(id)
 
 @app.get('/adoption_forms')
-def all_adoption_form():
-    adoption_form = AdoptionForm.query.all()
-    user_json = [adoption_form.to_dict() for adoption_form in adoption_forms]
+def all_adoption_forms():
+    adoption_forms = AdoptionForm.query.all()
+    adoption_forms_json = [adoption_form.to_dict() for adoption_form in adoption_forms]
     return jsonify(adoption_forms_json), 200
 
 
 @app.get('/adoption_forms/<int:id>')
 def adoption_form_by_id(id):
     adoption_form = find_adoption_form_by_id(id)
-    if user:
-        return jsonify(user.to_dict()), 200
+    if adoption_form:
+        return jsonify(adoption_form.to_dict()), 200
     return jsonify({'error': 'From not found'}), 404
 
 
@@ -174,38 +176,48 @@ def adoption_form_by_id(id):
 def create_adoption_form():
     try:
         body = request.get_json()
+        print("Request body:", body)  # Add this to see the full request data
 
-        #To ensure required fields are presented
-        required_field = ['full_name', 'email', 'phone_number', 'address', 'user_id', 'pet_id']
-        for field in required_field:
-            if not body.get(field):
+        # Ensure required fields are present
+        required_fields = ['full_name', 'email', 'phone_number', 'address', 'user_id', 'pet_id']
+        for field in required_fields:
+            if body.get(field) in [None, ""]:
+                print(f"Missing field: {field}")  # Log which field is missing
                 return jsonify({'error': f'{field} is required'}), 400
 
-
+        # Create the new adoption form
         new_adoption_form = AdoptionForm(
             full_name=body.get('full_name'),
             email=body.get('email'),
             phone_number=body.get('phone_number'),
             address=body.get('address'),
+            city=body.get('city'),
+            state=body.get('state'),
+            zip_code=body.get('zip_code'),
             residence_type=body.get('residence_type'),
-            family_members=body.get('householdMembers'),
-            has_other_pets=body.get('otherPets') == 'yes',
-            pet_alone_hours=body.get('petAloneHours'),
-            pet_sleeping_place=body.get('petSleepingPlace'),
-            has_previous_adoption=body.get('previousAdoption') == 'yes',
-            user_id=body.get('user_id'),  # Ensure this is passed or set properly
-            pet_id=body.get('pet_id')        
-            submitted_at=datetime.now(),  # Automatically set the submission time
-            status='pending'  # Default status    
+            family_members=body.get('family_members'),
+            has_other_pets=body.get('has_other_pets', False),
+            pet_alone_hours=body.get('pet_alone_hours'),
+            pet_sleeping_place=body.get('pet_sleeping_place'),
+            has_previous_adoption=body.get('has_previous_adoption', False),
+            reason_for_adoption=body.get('reason_for_adoption'),
+            landlord_permission=body.get('landlord_permission'),
+            user_id=body.get('user_id'),
+            pet_id=body.get('pet_id'),
+            submitted_at=datetime.now(),
+            status='pending'
         )
+
         db.session.add(new_adoption_form)
         db.session.commit()
+        print("Adoption form created successfully")  # Log success message
         return jsonify(new_adoption_form.to_dict()), 201
-        
-    except Exception:
-        db.session.rollback()  # Rollback in case of error
-        print(f"Error creating adoption form: {e}")  # Log the error for debugging
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error creating adoption form: {e}")  # Log full error message
         return jsonify({'error': 'Invalid request'}), 400
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -85,3 +85,5 @@ class AdoptionForm(db.Model, SerializerMixin):
 
     user = db.relationship('User', back_populates='adoption_forms')
     pet = db.relationship('Pet', back_populates='adoption_forms')
+    
+    serialize_rules = ("-user.adoption_forms", "-pet.adoption_forms")
