@@ -4,14 +4,14 @@ function NotFound() {
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    height: "80vh",
+    height: "90vh",
     width: "100%",
     color: "white",
   };
 
   return (
     <main style={backgroundStyle}>
-      <h1 style={{ paddingTop: "20%", textAlign: "center" }}>Oops</h1>
+      <h1 style={{ paddingTop: "10%", textAlign: "center" }}>Oops</h1>
       <a href="/" style={{ display: "block", textAlign: "center", color: "lightblue", marginTop: "20px" }}>
         Go back to Home
       </a>
