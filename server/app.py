@@ -68,13 +68,13 @@ def login():
     return jsonify({'error': 'Invalid credentials'}), 401
 
 # Logout route - clears session
-@app.delete('/logout')
+@app.delete('/api/logout')
 def logout():
     session.pop('user_id', None)  # Remove user session
     return {}, 204
 
 # Create a new favorite pet for a user
-@app.post('/favorites')
+@app.post('/api/favorites')
 def create_favorite():
     try:
         body = request.get_json()
@@ -89,7 +89,7 @@ def create_favorite():
         return jsonify({'error': 'Invalid request'}), 400
 
 # Delete a favorite pet from a user's list
-@app.delete('/favorites/<int:id>')
+@app.delete('/api/favorites/<int:id>')
 def delete_favorite(id):
     favorite = Favorite.query.get(id)
     if favorite:
@@ -99,14 +99,14 @@ def delete_favorite(id):
     return jsonify({'error': 'Favorite not found'}), 404
 
 # Retrieve all pets
-@app.get('/pets')
+@app.get('/api/pets')
 def all_pets():
     pets = Pet.query.all()
     pets_json = [pet.to_dict() for pet in pets]
     return jsonify(pets_json), 200
 
 # Retrieve a pet by ID
-@app.get('/pets/<int:id>')
+@app.get('/api/pets/<int:id>')
 def pet_by_id(id):
     pet = Pet.query.get(id)
     if pet:
@@ -114,7 +114,7 @@ def pet_by_id(id):
     return jsonify({'error': 'Pet not found'}), 404
 
 # Create a new pet (Only admin can add pets)
-@app.post('/pets')
+@app.post('/api/pets')
 def create_pet():
     user_id = session.get('user_id')  # Get logged-in user from session
     user = User.query.get(user_id)
@@ -139,7 +139,7 @@ def create_pet():
         return jsonify({'error': 'Invalid request'}), 400
 
 # Delete a pet (Only admin can delete pets)
-@app.delete('/pets/<int:id>')
+@app.delete('/api/pets/<int:id>')
 def delete_pet(id):
     user_id = session.get('user_id')  # Get logged-in user
     user = User.query.get(user_id)
@@ -157,7 +157,7 @@ def delete_pet(id):
 def find_adoption_form_by_id(id):
     return AdoptionForm.query.get(id)
 
-@app.get('/adoption_forms')
+@app.get('/api/adoption_forms')
 def all_adoption_forms():
     adoption_forms = AdoptionForm.query.all()
     adoption_forms_json = [adoption_form.to_dict() for adoption_form in adoption_forms]
@@ -165,7 +165,7 @@ def all_adoption_forms():
     return jsonify(adoption_forms_json), 200
 
 
-@app.get('/adoption_forms/<int:id>')
+@app.get('/api/adoption_forms/<int:id>')
 def adoption_form_by_id(id):
     adoption_form = find_adoption_form_by_id(id)
     if adoption_form:
@@ -173,7 +173,7 @@ def adoption_form_by_id(id):
     return jsonify({'error': 'From not found'}), 404
 
 
-@app.post('/adoption_forms')
+@app.post('/api/adoption_forms')
 def create_adoption_form():
     try:
         body = request.get_json()
@@ -221,7 +221,7 @@ def create_adoption_form():
         print(f"Error creating adoption form: {e}")  # Log full error message
         return jsonify({'error': 'Invalid request'}), 400
 
-@app.patch('/adoption_forms/<int:id>')
+@app.patch('/api/adoption_forms/<int:id>')
 def update_adoption_form(id):
     adoption_form = AdoptionForm.query.get(id)
     
@@ -273,7 +273,7 @@ def update_adoption_form(id):
         print(f"Error updating adoption form: {e}")
         return jsonify({'error': 'Failed to update the adoption form'}), 400
 
-@app.delete('/adoption_forms/<int:id>')
+@app.delete('/api/adoption_forms/<int:id>')
 def delete_adoption_form(id):
     adoption_form = AdoptionForm.query.get(id)
     
