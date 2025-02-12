@@ -25,9 +25,10 @@ footer {
 
 .pet-cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensure three cards per row */
+  grid-template-columns: repeat(3, 1fr); /* three cards per row */
   gap: 20px;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .pet-card {
@@ -36,13 +37,13 @@ footer {
   border-radius: 10px;
   width: 200px;
   text-align: center;
-  cursor: pointer;
 }
 
 .pet-card img {
   width: 100%;
   height: auto;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .filter-bar {

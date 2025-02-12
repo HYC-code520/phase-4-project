@@ -2,9 +2,9 @@
 // Need to log in first to apply for the adoption
 // Need adoption button
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function AdoptionForm() {
+function AdoptionForm({ petName }) {
   const [formData, setFormData] = useState({
     petName: "",
     fullName: "",
@@ -21,6 +21,13 @@ function AdoptionForm() {
     petSleepingPlace: "",
     previousAdoption: "no",
   });
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      petName: petName,
+    }));
+  }, [petName]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -41,7 +48,7 @@ function AdoptionForm() {
       <form onSubmit={handleSubmit}>
         <label>
           Pet Name:
-          <input type="text" name="petName" value={formData.petName} onChange={handleChange} />
+          <input type="text" name="petName" value={formData.petName} onChange={handleChange} readOnly />
         </label>
         <br />
         <label>

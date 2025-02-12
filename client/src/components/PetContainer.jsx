@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PetCard from './PetCard';
 import FilterBar from './FilterBar';
+import AdoptionForm from './AdoptionForm';
 
 const PetContainer = () => {
   const [pets, setPets] = useState([]);
@@ -27,6 +28,10 @@ const PetContainer = () => {
     setSelectedPet(null);
   };
 
+  const handleToggleFavorite = (petId) => {
+    // This function can be implemented to handle favorite toggle
+  };
+
   return (
     <div>
       <FilterBar filter={filter} setFilter={setFilter} />
@@ -34,12 +39,13 @@ const PetContainer = () => {
         {selectedPet ? (
           <div className="selected-pet-container">
             <button onClick={handleBackClick}>Back</button>
-            <PetCard pet={selectedPet} />
+            <PetCard pet={selectedPet} onToggleFavorite={handleToggleFavorite} />
+            <AdoptionForm petName={selectedPet.name} />
           </div>
         ) : (
           filteredPets.map(pet => (
-            <div key={pet.id} onClick={() => handlePetClick(pet)}>
-              <PetCard pet={pet} />
+            <div key={pet.id}>
+              <PetCard pet={pet} onImageClick={handlePetClick} onToggleFavorite={handleToggleFavorite} />
             </div>
           ))
         )}
