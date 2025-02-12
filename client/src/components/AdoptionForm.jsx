@@ -3,6 +3,7 @@ import { useState } from "react";
 function AdoptionForm() {
   const initialFormData = {
     full_name: "",
+    age: "",
     email: "",
     phone_number: "",
     address: "",
@@ -34,6 +35,7 @@ function AdoptionForm() {
   function validateForm() {
     let formErrors = {};
     if (!formData.full_name) formErrors.full_name = "Full name is required.";
+    if (!formData.age || formData.age <= 0) formErrors.age = "Age must be a positive number.";
     if (!formData.email.includes("@")) formErrors.email = "Please enter a valid email.";
     if (!formData.phone_number) formErrors.phone_number = "Phone number is required.";
     if (!formData.address) formErrors.address = "Address is required.";
@@ -44,6 +46,7 @@ function AdoptionForm() {
     return formErrors;
   }
 
+
   function handleSubmit(event) {
     event.preventDefault();
     const formErrors = validateForm();
@@ -51,15 +54,39 @@ function AdoptionForm() {
       setErrors(formErrors);
     } else {
       setErrors({});
-      setIsSubmitted(true);
-      console.log("Adoption form submitted:", formData);
-
-      // TODO: Add an actual API POST request to send the form data to the backend
-
-      setFormData(initialFormData); // Reset form
+      setIsSubmitted(false);
+  
+      const userId = 1; // Replace with the actual logged-in user ID
+      const formDataWithUserId = { ...formData, user_id: userId, pet_id: 5 }; // Add `user_id` and `pet_id`
+  
+      console.log("Form data to be submitted:", formDataWithUserId);
+  
+      fetch('http://localhost:5555/adoption_forms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataWithUserId),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to submit the form.');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Form submitted successfully:', data);
+          setIsSubmitted(true);
+          setFormData(initialFormData);
+        })
+        .catch((error) => {
+          console.error('Error submitting form:', error);
+          alert('There was an error submitting your form. Please try again.');
+        });
     }
   }
-
+  
+  
   return (
     <div>
       <h2>Adoption Form</h2>
@@ -71,6 +98,13 @@ function AdoptionForm() {
           {errors.full_name && <p style={{ color: "red" }}>{errors.full_name}</p>}
         </label>
         <br />
+        <label>
+          Age:
+          <input type="number" name="age" value={formData.age} onChange={handleChange} />
+          {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
+        </label>
+        <br />
+
         <label>
           Email:
           <input type="email" name="email" value={formData.email} onChange={handleChange} />

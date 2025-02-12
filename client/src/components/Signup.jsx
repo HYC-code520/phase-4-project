@@ -5,10 +5,6 @@ function Signup() {
     fullName: "",
     email: "",
     password: "",
-    phoneNumber: "",
-    address: "",
-    city: "",
-    state: "",
     zip: "",
     agreedToTerms: false,
   });
@@ -46,34 +42,20 @@ function Signup() {
         </label>
         <br />
         <label>
-          Phone Number:
-          <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Address:
-          <input type="text" name="address" value={formData.address} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          City:
-          <input type="text" name="city" value={formData.city} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          State:
-          <input type="text" name="state" value={formData.state} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
           Zip Code:
           <input type="text" name="zip" value={formData.zip} onChange={handleChange} />
         </label>
         <br />
+        <br />
         <label>
           <input type="checkbox" name="agreedToTerms" checked={formData.agreedToTerms} onChange={handleChange} />
-          I agree to the terms and conditions
+          Yes, I agree to receiving email and other marketing communications. 
+          <br />
+          I certify that I am over 18 years old and I have read and agree with the Terms & Conditions and Purina Perks Terms and Conditions. (Required)
+          <br />
+By clicking Create Account you acknowledge you have read our Privacy Policy, Notice at Collection.
         </label>
+        <br />
         <br />
         <button type="submit" disabled={!formData.agreedToTerms}>
           Create Account

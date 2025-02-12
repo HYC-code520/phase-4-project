@@ -63,6 +63,7 @@ class AdoptionForm(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String, nullable=False)
+    age = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String, nullable=False)
     phone_number = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
