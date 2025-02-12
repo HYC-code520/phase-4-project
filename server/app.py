@@ -99,14 +99,14 @@ def delete_favorite(id):
     return jsonify({'error': 'Favorite not found'}), 404
 
 # Retrieve all pets
-@app.get('/pets')
+@app.get('/api/pets')
 def all_pets():
     pets = Pet.query.all()
     pets_json = [pet.to_dict() for pet in pets]
     return jsonify(pets_json), 200
 
 # Retrieve a pet by ID
-@app.get('/pets/<int:id>')
+@app.get('/api/pets/<int:id>')
 def pet_by_id(id):
     pet = Pet.query.get(id)
     if pet:
@@ -114,7 +114,7 @@ def pet_by_id(id):
     return jsonify({'error': 'Pet not found'}), 404
 
 # Create a new pet (Only admin can add pets)
-@app.post('/pets')
+@app.post('/api/pets')
 def create_pet():
     user_id = session.get('user_id')  # Get logged-in user from session
     user = User.query.get(user_id)
@@ -139,7 +139,7 @@ def create_pet():
         return jsonify({'error': 'Invalid request'}), 400
 
 # Delete a pet (Only admin can delete pets)
-@app.delete('/pets/<int:id>')
+@app.delete('/api/pets/<int:id>')
 def delete_pet(id):
     user_id = session.get('user_id')  # Get logged-in user
     user = User.query.get(user_id)

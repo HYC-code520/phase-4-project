@@ -1,8 +1,8 @@
-"""initial migration
+"""empty message
 
-Revision ID: 969f78a5be48
+Revision ID: 6b7d4638121d
 Revises: 
-Create Date: 2025-02-11 14:56:39.819652
+Create Date: 2025-02-12 12:20:59.515774
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '969f78a5be48'
+revision = '6b7d4638121d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,19 +42,21 @@ def upgrade():
     op.create_table('adoption_forms',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('full_name', sa.String(), nullable=False),
+    sa.Column('age', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('phone_number', sa.String(), nullable=False),
     sa.Column('address', sa.String(), nullable=False),
-    sa.Column('employment_status', sa.String(), nullable=True),
-    sa.Column('house_type', sa.String(), nullable=False),
-    sa.Column('has_pets', sa.Boolean(), nullable=False),
-    sa.Column('pet_experience', sa.Text(), nullable=False),
-    sa.Column('why_adopt', sa.Text(), nullable=False),
-    sa.Column('is_renter', sa.Boolean(), nullable=False),
-    sa.Column('landlord_permission', sa.Boolean(), nullable=False),
+    sa.Column('city', sa.String(), nullable=True),
+    sa.Column('state', sa.String(), nullable=True),
+    sa.Column('zip_code', sa.String(), nullable=True),
+    sa.Column('residence_type', sa.String(), nullable=False),
     sa.Column('family_members', sa.Integer(), nullable=True),
-    sa.Column('has_children', sa.Boolean(), nullable=False),
-    sa.Column('reference_contact', sa.String(), nullable=True),
+    sa.Column('has_other_pets', sa.Boolean(), nullable=False),
+    sa.Column('pet_alone_hours', sa.Integer(), nullable=True),
+    sa.Column('pet_sleeping_place', sa.String(), nullable=True),
+    sa.Column('has_previous_adoption', sa.Boolean(), nullable=False),
+    sa.Column('reason_for_adoption', sa.Text(), nullable=False),
+    sa.Column('landlord_permission', sa.Boolean(), nullable=False),
     sa.Column('submitted_at', sa.DateTime(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
