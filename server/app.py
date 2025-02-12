@@ -218,7 +218,7 @@ def create_adoption_form():
             has_previous_adoption=body.get('has_previous_adoption', False),
             reason_for_adoption=body.get('reason_for_adoption'),
             landlord_permission=body.get('landlord_permission'),
-            user_id=body.get('user_id'),
+            user_id = session.get('user_id'), ##############
             pet_id=body.get('pet_id'),
             submitted_at=datetime.now(),
             status='pending'

@@ -10,6 +10,8 @@ function Navbar({ user, handleLogout }) {
       <ul className="nav-links">
         <li><NavLink to="/dogs">Dogs</NavLink></li>
         <li><NavLink to="/cats">Cats</NavLink></li>
+
+        {/* below code show applications button to the admin only */}
         {
           user?.is_admin
           ?
@@ -17,12 +19,18 @@ function Navbar({ user, handleLogout }) {
           :
           null
         }
-        <li><NavLink to="/favorites">❤</NavLink></li>
 
+        {
+          user?
+          <li><NavLink to="/favorites">❤</NavLink></li>
+          :
+          null
+        }
+        
         {user ? (
           <>
             <li>Hello, {user.name}!</li>
-            <li><button onClick={handleLogout}>Logout</button></li>
+            <li><button onClick={handleLogout}>Logout</button></li> 
           </>
         ) : (
           <>

@@ -5,10 +5,10 @@ const Cats = () => {
   const [cats, setCats] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5555/pets') // Adjust the endpoint according to your backend API
+    fetch('/api/pets') // Adjust the endpoint according to your backend API
       .then(response => response.json())
       .then(data => {
-        const catsData = data.filter(pet => pet.animal_type === 'cat');
+        const catsData = data.filter(pet => pet.animal_type === 'Cat');
         setCats(catsData);
       })
       .catch(error => console.error('Error fetching pets:', error));
