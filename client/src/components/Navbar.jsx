@@ -10,7 +10,13 @@ function Navbar({ user, handleLogout }) {
       <ul className="nav-links">
         <li><NavLink to="/dogs">Dogs</NavLink></li>
         <li><NavLink to="/cats">Cats</NavLink></li>
-        <li><NavLink to="/other-animals">Other Animals</NavLink></li>
+        {
+          user?.is_admin
+          ?
+          <li><NavLink to="/adoption-applications">Adoption Applications</NavLink></li>
+          :
+          null
+        }
         <li><NavLink to="/favorites">❤</NavLink></li>
 
         {user ? (

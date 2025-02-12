@@ -73,7 +73,7 @@ function AdoptionForm({ petName }) {
   
       console.log("Form data to be submitted:", formDataWithUserId);
   
-      fetch('http://localhost:5555/adoption_forms', {
+      fetch('/api/adoption_forms', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
