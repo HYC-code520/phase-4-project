@@ -71,7 +71,8 @@ if __name__ == '__main__':
                 animal_type=animal,
                 breed=rc(breeds[animal]),
                 img_url=img_url,
-                adoption_status=rc(['Available', 'Adopted', 'Adoption pending'])
+                adoption_status=rc(['Available', 'Adopted', 'Adoption pending']),
+                is_favorite=False # Add this line
             )
             db.session.add(random_pet)
 
