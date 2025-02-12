@@ -1,9 +1,14 @@
-import { useState } from "react";
 
-function AdoptionForm() {
-  const initialFormData = {
-    full_name: "",
-    age: "",
+// Everything a user have
+// Need to log in first to apply for the adoption
+// Need adoption button
+
+import { useState, useEffect } from "react";
+
+function AdoptionForm({ petName }) {
+  const [formData, setFormData] = useState({
+    petName: "",
+    fullName: "",
     email: "",
     phone_number: "",
     address: "",
@@ -23,6 +28,13 @@ function AdoptionForm() {
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      petName: petName,
+    }));
+  }, [petName]);
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -93,6 +105,8 @@ function AdoptionForm() {
       {isSubmitted && <p style={{ color: "green" }}>Form submitted successfully!</p>}
       <form onSubmit={handleSubmit}>
         <label>
+          Pet Name:
+          <input type="text" name="petName" value={formData.petName} onChange={handleChange} readOnly />
           Full Name:
           <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} />
           {errors.full_name && <p style={{ color: "red" }}>{errors.full_name}</p>}
