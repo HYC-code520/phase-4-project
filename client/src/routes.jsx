@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
+import MainLayout from "./components/MainLayout"; // Ensures Navbar and Footer persist
+import App from "./App"; // Home page content
 import Dogs from "./components/Dogs";
 import Cats from "./components/Cats";
 import OtherAnimals from "./components/OtherAnimals";
@@ -9,88 +10,24 @@ import Favorites from "./components/Favorites";
 import NotFound from "./components/NotFound";
 import AdoptionApplications from "./components/AdoptionApplications"; 
 import AdoptionForm from "./components/AdoptionForm";
+import PetContainer from "./components/PetContainer"; // Displays all available pets
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <App>
-        <h1>Welcome to the Pet Adoption App! 🐶🐱</h1>
-        <p>Find your next furry friend today!</p>
-      </App>
-    ),
-  },
-  {
-    path: "/dogs",
-    element: (
-      <App>
-        <Dogs />
-      </App>
-    ),
-  },
-  {
-    path: "/cats",
-    element: (
-      <App>
-        <Cats />
-      </App>
-    ),
-  },
-  {
-    path: "/other-animals",
-    element: (
-      <App>
-        <OtherAnimals />
-      </App>
-    ),
-  },
-  {
-    path: "/favorites",
-    element: (
-      <App>
-        <Favorites />
-      </App>
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <App>
-        <Login />
-      </App>
-    ),
-  },
-  {
-    path: "/signup",
-    element: (
-      <App>
-        <Signup />
-      </App>
-    ),
-  },
-  {
-    path: "/adoption-form",
-    element: (
-      <App>
-        <AdoptionForm />
-      </App>
-    ),
-  },
-  {
-    path: "/adoption-applications",
-    element: (
-      <App>
-        <AdoptionApplications />
-      </App>
-    ),
-  },
-  {
-    path: "*",
-    element: (
-      <App>
-        <NotFound />
-      </App>
-    ),
+    element: <MainLayout />, // Wraps all routes with Navbar and Footer
+    children: [
+      { path: "/", element: <App /> }, // Home page
+      { path: "/dogs", element: <Dogs /> },
+      { path: "/cats", element: <Cats /> },
+      { path: "/other-animals", element: <OtherAnimals /> },
+      { path: "/favorites", element: <Favorites /> },
+      { path: "/login", element: <Login /> },
+      { path: "/signup", element: <Signup /> },
+      { path: "/adoption-form", element: <AdoptionForm /> },
+      { path: "/adoption-applications", element: <AdoptionApplications /> },
+      { path: "*", element: <NotFound /> }, // Handles 404 cases
+    ],
   },
 ]);
 
