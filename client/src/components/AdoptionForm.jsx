@@ -1,4 +1,3 @@
-
 // Everything a user have
 // Need to log in first to apply for the adoption
 // Need adoption button
@@ -6,15 +5,16 @@
 import { useState, useEffect } from "react";
 
 function AdoptionForm({ petName }) {
-  const [formData, setFormData] = useState({
-    petName: "",
+  const initialFormData = {
+    petName: petName || "",
     fullName: "",
+    age: "",
     email: "",
-    phone_number: "",
+    phoneNumber: "",
     address: "",
     city: "",
     state: "",
-    zip_code: "",
+    zipCode: "",
     residence_type: "house", // Default value
     family_members: 1,
     has_other_pets: false,
