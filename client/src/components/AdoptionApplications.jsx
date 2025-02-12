@@ -5,7 +5,7 @@ function AdoptionApplications() {
   const [showDetails, setShowDetails] = useState({}); // Track which application details are shown
 
   useEffect(() => {
-    fetch("http://localhost:5555/adoption_forms")
+    fetch("/api/adoption_forms")
       .then((response) => response.json())
       .then((data) => setApplications(data))
       .catch((error) => console.error("Error fetching applications:", error));

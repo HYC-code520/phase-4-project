@@ -2,7 +2,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from config import db, bcrypt
 
-# User model
+# User model - Stores user details and handles authentication
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -13,23 +13,28 @@ class User(db.Model, SerializerMixin):
     age = db.Column(db.Integer, nullable=False)
     is_admin = db.Column(db.Boolean, default=False, nullable=False)  # Admin flag
 
+    # Relationships
     favorites = db.relationship('Favorite', back_populates='user', cascade='all, delete-orphan')
     adoption_forms = db.relationship('AdoptionForm', back_populates='user')
 
+    # Exclude password hash from serialization for security reasons
     serialize_rules = ("-favorites.user", "-password_hash")
 
+    # Property to prevent direct access to password hash
     @property
     def password(self):
         raise AttributeError('Password is not readable')
 
+    # Setter to hash the password before storing it in the database
     @password.setter
     def password(self, new_password):
         self.password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
 
+    # Method to authenticate user by checking password hash
     def authenticate(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
-# Pet model (Added `favorites` relationship)
+# Pet model - Represents animals available for adoption
 class Pet(db.Model, SerializerMixin):
     __tablename__ = 'pets'
 
@@ -42,12 +47,11 @@ class Pet(db.Model, SerializerMixin):
     adoption_status = db.Column(db.String(50), nullable=False)
     is_favorite = db.Column(db.Boolean, default=False)  
 
-    # FIX: Added relationship with Favorite
+    # Relationships
     favorites = db.relationship('Favorite', back_populates='pet', cascade='all, delete-orphan')
-
     adoption_forms = db.relationship('AdoptionForm', back_populates='pet')
 
-# Favorite model (Many-to-Many between Users and Pets)
+# Favorite model - Stores favorite pets saved by users (Many-to-Many relationship)
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
 
@@ -55,10 +59,11 @@ class Favorite(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id', ondelete='CASCADE'), nullable=False)
 
+    # Relationships
     user = db.relationship('User', back_populates='favorites')
     pet = db.relationship('Pet', back_populates='favorites')
 
-#Adoption Form model
+# AdoptionForm model - Stores adoption application details submitted by users
 class AdoptionForm(db.Model, SerializerMixin):
     __tablename__ = 'adoption_forms'
 
@@ -68,24 +73,27 @@ class AdoptionForm(db.Model, SerializerMixin):
     email = db.Column(db.String, nullable=False)
     phone_number = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
-    city = db.Column(db.String)  # New
-    state = db.Column(db.String)  # New
-    zip_code = db.Column(db.String)  # New
+    city = db.Column(db.String)  # New field
+    state = db.Column(db.String)  # New field
+    zip_code = db.Column(db.String)  # New field
     residence_type = db.Column(db.String, nullable=False, default="house")  # Renamed from house_type
     family_members = db.Column(db.Integer)
-    has_other_pets = db.Column(db.Boolean, nullable=False, default=False)  # New
-    pet_alone_hours = db.Column(db.Integer)  # New
-    pet_sleeping_place = db.Column(db.String)  # New
-    has_previous_adoption = db.Column(db.Boolean, nullable=False, default=False)  # New
-    reason_for_adoption = db.Column(db.Text, nullable=False)  # New
+    has_other_pets = db.Column(db.Boolean, nullable=False, default=False)  # New field
+    pet_alone_hours = db.Column(db.Integer)  # New field
+    pet_sleeping_place = db.Column(db.String)  # New field
+    has_previous_adoption = db.Column(db.Boolean, nullable=False, default=False)  # New field
+    reason_for_adoption = db.Column(db.Text, nullable=False)  # New field
     landlord_permission = db.Column(db.Boolean, nullable=False)
     submitted_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     status = db.Column(db.String, nullable=False, default='pending')
 
+    # Foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'), nullable=False)
 
+    # Relationships
     user = db.relationship('User', back_populates='adoption_forms')
     pet = db.relationship('Pet', back_populates='adoption_forms')
-    
+
+    # Exclude recursive serialization loops
     serialize_rules = ("-user.adoption_forms", "-pet.adoption_forms")

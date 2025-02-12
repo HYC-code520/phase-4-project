@@ -35,7 +35,7 @@ def user_by_id(id):
         return jsonify(user.to_dict(rules=("-password_hash",))), 200
     return jsonify({'error': 'User not found'}), 404
 
-# Create a new user (password is hashed using Flask-Bcrypt via the property setter)
+# Create a new user (password is hashed using Flask-Bcrypt)
 @app.post('/api/users')
 def create_user():
     try:
@@ -45,17 +45,21 @@ def create_user():
             email=body.get('email'),
             age=body.get('age')
         )
-        new_user.password = body.get('password')  # Uses the Flask-Bcrypt setter
+        new_user.password = body.get('password')  # Uses the password setter
         db.session.add(new_user)
         db.session.commit()
+        
+        # Store user session after successful signup
+        session['user_id'] = new_user.id
+
         return jsonify(new_user.to_dict(rules=("-password_hash",))), 201
     except IntegrityError:
-        db.session.rollback()  # Rollback changes if a duplicate entry occurs
+        db.session.rollback()
         return jsonify({'error': 'User with this email or name already exists'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-# Admin login route - stores user session
+# Login route - validates user and starts a session
 @app.post('/api/login')
 def login():
     body = request.get_json()
@@ -63,15 +67,24 @@ def login():
 
     if user and user.authenticate(body.get('password')):
         session['user_id'] = user.id  # Store user ID in session
-        return jsonify({"message": "Login successful", "is_admin": user.is_admin}), 200
+        return jsonify(user.to_dict(rules=("-password_hash",))), 200
 
     return jsonify({'error': 'Invalid credentials'}), 401
 
 # Logout route - clears session
-@app.delete('/logout')
+@app.delete('/api/logout')
 def logout():
     session.pop('user_id', None)  # Remove user session
-    return {}, 204
+    return {}, 204  # No content response
+
+# Retrieve the current logged-in user
+@app.get("/api/session")
+def get_session():
+    user_id = session.get("user_id")
+    if user_id:
+        user = User.query.get(user_id)
+        return jsonify(user.to_dict(rules=("-password_hash",))), 200
+    return jsonify({"error": "Unauthorized"}), 401
 
 # Create a new favorite pet for a user
 @app.post('/favorites')
@@ -157,7 +170,7 @@ def delete_pet(id):
 def find_adoption_form_by_id(id):
     return AdoptionForm.query.get(id)
 
-@app.get('/adoption_forms')
+@app.get('/api/adoption_forms')
 def all_adoption_forms():
     adoption_forms = AdoptionForm.query.all()
     adoption_forms_json = [adoption_form.to_dict() for adoption_form in adoption_forms]
@@ -165,7 +178,7 @@ def all_adoption_forms():
     return jsonify(adoption_forms_json), 200
 
 
-@app.get('/adoption_forms/<int:id>')
+@app.get('/api/adoption_forms/<int:id>')
 def adoption_form_by_id(id):
     adoption_form = find_adoption_form_by_id(id)
     if adoption_form:
@@ -173,7 +186,7 @@ def adoption_form_by_id(id):
     return jsonify({'error': 'From not found'}), 404
 
 
-@app.post('/adoption_forms')
+@app.post('/api/adoption_forms')
 def create_adoption_form():
     try:
         body = request.get_json()
@@ -221,7 +234,7 @@ def create_adoption_form():
         print(f"Error creating adoption form: {e}")  # Log full error message
         return jsonify({'error': 'Invalid request'}), 400
 
-@app.patch('/adoption_forms/<int:id>')
+@app.patch('/api/adoption_forms/<int:id>')
 def update_adoption_form(id):
     adoption_form = AdoptionForm.query.get(id)
     
@@ -273,7 +286,7 @@ def update_adoption_form(id):
         print(f"Error updating adoption form: {e}")
         return jsonify({'error': 'Failed to update the adoption form'}), 400
 
-@app.delete('/adoption_forms/<int:id>')
+@app.delete('/api/adoption_forms/<int:id>')
 def delete_adoption_form(id):
     adoption_form = AdoptionForm.query.get(id)
     

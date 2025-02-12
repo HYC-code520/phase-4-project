@@ -1,65 +1,89 @@
 import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function Signup() {
+  const { setUser } = useOutletContext();
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
-    zip: "",
-    agreedToTerms: false,
+    age: "",
   });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   function handleChange(event) {
-    const { name, value, type, checked } = event.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("Signup form submitted:", formData);
+
+    fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", // Include session cookies
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) throw new Error(data.error);
+        setUser(data);
+        navigate("/");
+      })
+      .catch((err) => setError(err.message));
   }
 
   return (
     <div>
-      <h2>Signup Form</h2>
+      <h2>Signup</h2>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Full Name:
-          <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+          Name:{" "}
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
         <label>
-          Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          Email:{" "}
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
         <label>
-          Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
+          Password:{" "}
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
         <label>
-          Zip Code:
-          <input type="text" name="zip" value={formData.zip} onChange={handleChange} />
+          Age:{" "}
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
-        <br />
-        <label>
-          <input type="checkbox" name="agreedToTerms" checked={formData.agreedToTerms} onChange={handleChange} />
-          Yes, I agree to receiving email and other marketing communications. 
-          <br />
-          I certify that I am over 18 years old and I have read and agree with the Terms & Conditions and Purina Perks Terms and Conditions. (Required)
-          <br />
-By clicking Create Account you acknowledge you have read our Privacy Policy, Notice at Collection.
-        </label>
-        <br />
-        <br />
-        <button type="submit" disabled={!formData.agreedToTerms}>
-          Create Account
-        </button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
