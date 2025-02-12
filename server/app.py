@@ -180,7 +180,8 @@ def create_adoption_form():
         print("Request body:", body)  # Add this to see the full request data
 
         # Ensure required fields are present
-        required_fields = ['full_name', 'email', 'phone_number', 'address', 'user_id', 'pet_id']
+        required_fields = ['full_name', 'age', 'email', 'phone_number', 'address', 'user_id', 'pet_id']
+
         for field in required_fields:
             if body.get(field) in [None, ""]:
                 print(f"Missing field: {field}")  # Log which field is missing
@@ -189,6 +190,7 @@ def create_adoption_form():
         # Create the new adoption form
         new_adoption_form = AdoptionForm(
             full_name=body.get('full_name'),
+            age=body.get('age'),
             email=body.get('email'),
             phone_number=body.get('phone_number'),
             address=body.get('address'),
