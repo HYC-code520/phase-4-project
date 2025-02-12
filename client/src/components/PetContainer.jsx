@@ -5,6 +5,7 @@ import FilterBar from './FilterBar';
 const PetContainer = () => {
   const [pets, setPets] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [selectedPet, setSelectedPet] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:5555/pets') // Adjust the endpoint according to your backend API
@@ -18,13 +19,30 @@ const PetContainer = () => {
     return pet.animal_type === filter;
   });
 
+  const handlePetClick = (pet) => {
+    setSelectedPet(pet);
+  };
+
+  const handleBackClick = () => {
+    setSelectedPet(null);
+  };
+
   return (
     <div>
       <FilterBar filter={filter} setFilter={setFilter} />
       <div className="pet-cards-container">
-        {filteredPets.map(pet => (
-          <PetCard key={pet.id} pet={pet} />
-        ))}
+        {selectedPet ? (
+          <div className="selected-pet-container">
+            <button onClick={handleBackClick}>Back</button>
+            <PetCard pet={selectedPet} />
+          </div>
+        ) : (
+          filteredPets.map(pet => (
+            <div key={pet.id} onClick={() => handlePetClick(pet)}>
+              <PetCard pet={pet} />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

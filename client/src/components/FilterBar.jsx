@@ -10,8 +10,8 @@ const FilterBar = ({ filter, setFilter }) => {
       <label htmlFor="filter">Filter by:</label>
       <select id="filter" value={filter} onChange={handleFilterChange}>
         <option value="all">All</option>
-        <option value="cat">Cats</option>
-        <option value="dog">Dogs</option>
+        <option value="Cat">Cats</option>
+        <option value="Dog">Dogs</option>
       </select>
     </div>
   );
