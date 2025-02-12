@@ -9,7 +9,7 @@ const PetContainer = () => {
   const [selectedPet, setSelectedPet] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5555/pets') // Adjust the endpoint according to your backend API
+    fetch('/api/pets') // Adjust the endpoint according to your backend API
       .then(response => response.json())
       .then(data => setPets(data))
       .catch(error => console.error('Error fetching pets:', error));
@@ -39,12 +39,16 @@ const PetContainer = () => {
         {selectedPet ? (
           <div className="selected-pet-container">
             <button onClick={handleBackClick}>Back</button>
-            <PetCard pet={selectedPet} onToggleFavorite={handleToggleFavorite} />
-            <AdoptionForm petName={selectedPet.name} />
+            <div className="selected-pet">
+              <PetCard pet={selectedPet} onToggleFavorite={handleToggleFavorite} />
+            </div>
+            <div className="adoption-form">
+              <AdoptionForm petName={selectedPet.name} />
+            </div>
           </div>
         ) : (
           filteredPets.map(pet => (
-            <div key={pet.id}>
+            <div key={pet.id} className="pet-card-container">
               <PetCard pet={pet} onImageClick={handlePetClick} onToggleFavorite={handleToggleFavorite} />
             </div>
           ))
