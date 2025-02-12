@@ -161,6 +161,7 @@ def find_adoption_form_by_id(id):
 def all_adoption_forms():
     adoption_forms = AdoptionForm.query.all()
     adoption_forms_json = [adoption_form.to_dict() for adoption_form in adoption_forms]
+    print("Adoption forms:", adoption_forms_json)
     return jsonify(adoption_forms_json), 200
 
 
@@ -217,6 +218,74 @@ def create_adoption_form():
         db.session.rollback()
         print(f"Error creating adoption form: {e}")  # Log full error message
         return jsonify({'error': 'Invalid request'}), 400
+
+@app.patch('/adoption_forms/<int:id>')
+def update_adoption_form(id):
+    adoption_form = AdoptionForm.query.get(id)
+    
+    if not adoption_form:
+        return jsonify({'error': 'Adoption form not found'}), 404
+
+    try:
+        body = request.get_json()
+        
+        # Update fields only if they are present in the request body
+        if 'full_name' in body:
+            adoption_form.full_name = body.get('full_name')
+        if 'email' in body:
+            adoption_form.email = body.get('email')
+        if 'phone_number' in body:
+            adoption_form.phone_number = body.get('phone_number')
+        if 'address' in body:
+            adoption_form.address = body.get('address')
+        if 'city' in body:
+            adoption_form.city = body.get('city')
+        if 'state' in body:
+            adoption_form.state = body.get('state')
+        if 'zip_code' in body:
+            adoption_form.zip_code = body.get('zip_code')
+        if 'residence_type' in body:
+            adoption_form.residence_type = body.get('residence_type')
+        if 'family_members' in body:
+            adoption_form.family_members = body.get('family_members')
+        if 'has_other_pets' in body:
+            adoption_form.has_other_pets = body.get('has_other_pets')
+        if 'pet_alone_hours' in body:
+            adoption_form.pet_alone_hours = body.get('pet_alone_hours')
+        if 'pet_sleeping_place' in body:
+            adoption_form.pet_sleeping_place = body.get('pet_sleeping_place')
+        if 'has_previous_adoption' in body:
+            adoption_form.has_previous_adoption = body.get('has_previous_adoption')
+        if 'reason_for_adoption' in body:
+            adoption_form.reason_for_adoption = body.get('reason_for_adoption')
+        if 'landlord_permission' in body:
+            adoption_form.landlord_permission = body.get('landlord_permission')
+        if 'status' in body:
+            adoption_form.status = body.get('status')
+
+        db.session.commit()
+        return jsonify(adoption_form.to_dict()), 200
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error updating adoption form: {e}")
+        return jsonify({'error': 'Failed to update the adoption form'}), 400
+
+@app.delete('/adoption_forms/<int:id>')
+def delete_adoption_form(id):
+    adoption_form = AdoptionForm.query.get(id)
+    
+    if adoption_form:
+        try:
+            db.session.delete(adoption_form)
+            db.session.commit()
+            return jsonify({"message": f"Adoption form with id {id} has been deleted."}), 200
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error deleting adoption form: {e}")
+            return jsonify({"error": "Failed to delete adoption form."}), 500
+    else:
+        return jsonify({"error": f"Adoption form with id {id} not found."}), 404
 
 
 if __name__ == '__main__':
