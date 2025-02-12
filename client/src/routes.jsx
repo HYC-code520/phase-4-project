@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Favorites from "./components/Favorites";
 import NotFound from "./components/NotFound";
+import AdoptionApplications from "./components/AdoptionApplications"; 
+import AdoptionForm from "./components/AdoptionForm";
 
 const routes = createBrowserRouter([
   {
@@ -63,6 +65,22 @@ const routes = createBrowserRouter([
     element: (
       <App>
         <Signup />
+      </App>
+    ),
+  },
+  {
+    path: "/adoption-form",
+    element: (
+      <App>
+        <AdoptionForm />
+      </App>
+    ),
+  },
+  {
+    path: "/adoption-applications",
+    element: (
+      <App>
+        <AdoptionApplications />
       </App>
     ),
   },
