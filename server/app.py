@@ -87,22 +87,20 @@ def get_session():
     return jsonify({"error": "Unauthorized"}), 401
 
 # Create a new favorite pet for a user
-@app.post('/favorites')
-def create_favorite():
-    try:
-        body = request.get_json()
-        new_favorite = Favorite(
-            user_id=body.get('user_id'),
-            pet_id=body.get('pet_id')
-        )
-        db.session.add(new_favorite)
-        db.session.commit()
-        return jsonify(new_favorite.to_dict()), 201
-    except Exception:
-        return jsonify({'error': 'Invalid request'}), 400
+@app.get('/api/favorites')
+def get_favorites():
+    user_id = request.args.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'User ID is required'}), 400
+
+    favorites = Favorite.query.filter_by(user_id=user_id).all()
+    
+    # ✅ Only return the pet details, avoiding recursion
+    return jsonify([{"id": fav.id, "pet": fav.pet.to_dict(rules=("-favorites",))} for fav in favorites]), 200
+
 
 # Delete a favorite pet from a user's list
-@app.delete('/favorites/<int:id>')
+@app.delete('/api/favorites/<int:id>')
 def delete_favorite(id):
     favorite = Favorite.query.get(id)
     if favorite:
@@ -184,6 +182,25 @@ def adoption_form_by_id(id):
     if adoption_form:
         return jsonify(adoption_form.to_dict()), 200
     return jsonify({'error': 'From not found'}), 404
+
+@app.post('/api/favorites')
+def create_favorite():
+    try:
+        body = request.get_json()
+        user_id = body.get('user_id')
+        pet_id = body.get('pet_id')
+        # Check if the favorite already exists
+        existing = Favorite.query.filter_by(user_id=user_id, pet_id=pet_id).first()
+        if existing:
+            return jsonify(existing.to_dict()), 200
+        new_fav = Favorite(user_id=user_id, pet_id=pet_id)
+        db.session.add(new_fav)
+        db.session.commit()
+        return jsonify(new_fav.to_dict()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
 
 
 @app.post('/api/adoption_forms')
