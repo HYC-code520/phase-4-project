@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import "../styles/AdoptionApplications.css"; // Ensure to create this file for styles
 
 function AdoptionApplications() {
   const [applications, setApplications] = useState([]);
-  const [showDetails, setShowDetails] = useState({}); // Track which application details are shown
+  const [showDetails, setShowDetails] = useState({});
 
   useEffect(() => {
     fetch("/api/adoption_forms")
@@ -14,24 +15,27 @@ function AdoptionApplications() {
   const toggleDetails = (id) => {
     setShowDetails((prevState) => ({
       ...prevState,
-      [id]: !prevState[id], // Toggle the current application's visibility
+      [id]: !prevState[id],
     }));
   };
 
   if (applications.length === 0) {
-    return <p>Loading applications...</p>;
+    return <p className="loading">Loading applications...</p>;
   }
 
   return (
-    <div>
+    <div className="adoption-applications-container">
       <h2>Review Adoption Applications</h2>
       <div className="application-cards">
         {applications.map((app) => (
           <div key={app.id} className="application-card">
-            <h3>{app.full_name}</h3>
+            <h3 className="applicant-name">{app.full_name}</h3>
             <p><strong>Status:</strong> {app.status}</p>
             <p><strong>Email:</strong> {app.email}</p>
-            <button onClick={() => toggleDetails(app.id)}>
+            <button
+              className="toggle-button"
+              onClick={() => toggleDetails(app.id)}
+            >
               {showDetails[app.id] ? "Hide Details" : "Show Details"}
             </button>
 
@@ -49,7 +53,6 @@ function AdoptionApplications() {
                 <p><strong>Landlord Permission:</strong> {app.landlord_permission ? "Yes" : "No"}</p>
               </div>
             )}
-            <hr />
           </div>
         ))}
       </div>

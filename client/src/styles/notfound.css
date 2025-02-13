@@ -1,0 +1,29 @@
+.not-found-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    background-image: url("/404_page.PNG");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .not-found-container h1 {
+    color: white;
+    font-size: 2.5rem;
+  }
+  
+  .not-found-container a {
+    color: lightblue;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+  
+  .not-found-container a:hover {
+    color: #00bcd4;
+  }
+  

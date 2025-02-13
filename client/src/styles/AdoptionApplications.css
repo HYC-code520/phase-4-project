@@ -1,0 +1,86 @@
+.adoption-applications-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffa726, #ff9800);
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+  }
+  
+  .adoption-applications-container h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .application-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .application-card {
+    background-color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .application-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .applicant-name {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #ef6c00;
+    margin-bottom: 10px;
+  }
+  
+  .toggle-button {
+    background-color: #ef6c00;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-button:hover {
+    background-color: #d84315;
+  }
+  
+  .details {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    font-size: 0.95em;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds the drop shadow */
+  }
+  
+  .details p {
+    margin: 8px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15); /* Text shadow for better contrast */
+  }
+  
+  
+  hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 15px 0;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+  }
+  

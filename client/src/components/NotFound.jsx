@@ -1,19 +1,10 @@
-function NotFound() {
-  const backgroundStyle = {
-    backgroundImage: `url("/404_page.png")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    height: "90vh",
-    width: "100%",
-    color: "white",
-  };
+import "../styles/notfound.css"; // Import the CSS file for NotFound-specific styles
 
+function NotFound() {
   return (
-    <main style={backgroundStyle}>
-      <h1 style={{ paddingTop: "10%", textAlign: "center" }}>Oops</h1>
-      <a href="/" style={{ display: "block", textAlign: "center", color: "lightblue", marginTop: "20px" }}>
-        Go back to Home
+    <main className="not-found-container">
+      <a href="/" className="not-found-link">
+        
       </a>
     </main>
   );
