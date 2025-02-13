@@ -119,3 +119,58 @@ button {
   width: 20%;
   height: 10%;
 }
+
+.signup-button {
+  background-color: #e79522;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #c1731e;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.signup-button {
+  position: absolute;
+  top: 85%;
+  left: 72%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #000000, #333333); /* Black gradient */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-button::before {
+  content: '✭'; /* White sparkle effect */
+  margin-right: 8px;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.signup-button:hover {
+  background: linear-gradient(135deg, #333333, #000000); /* Reverse gradient */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 40px rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%) scale(1.05); /* Slight scale-up effect */
+}
