@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import "../styles/Auth.css";
 
 function Login() {
   const { user, setUser } = useOutletContext();
@@ -40,7 +41,7 @@ function Login() {
   }
 
   return (
-    <div>
+    <div className="auth-container">
       {user ? (
         <div>
           <h2>Welcome, {user.name}!</h2>
@@ -49,30 +50,30 @@ function Login() {
       ) : (
         <div>
           <h2>Login</h2>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
-            <label>
-              Email:
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
-            </label>
-            <br />
-            <label>
-              Password:
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
+                id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
-            </label>
-            <br />
+            </div>
             <button type="submit">Login</button>
           </form>
         </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import "../styles/Auth.css";
 
 function Signup() {
   const { setUser } = useOutletContext();
@@ -10,10 +11,15 @@ function Signup() {
     age: "",
   });
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   function handleChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value });
+  }
+
+  function toggleShowPassword() {
+    setShowPassword(!showPassword);
   }
 
   function handleSubmit(event) {
@@ -35,54 +41,63 @@ function Signup() {
   }
 
   return (
-    <div>
+    <div className="auth-container">
       <h2>Signup</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:{" "}
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
           <input
             type="text"
+            id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
           />
-        </label>
-        <br />
-        <label>
-          Email:{" "}
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
           />
-        </label>
-        <br />
-        <label>
-          Password:{" "}
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Age:{" "}
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={toggleShowPassword}
+            >
+              {showPassword ? "🙈" : "👁"}
+            </button>
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="age">Age</label>
           <input
             type="number"
+            id="age"
             name="age"
             value={formData.age}
             onChange={handleChange}
             required
           />
-        </label>
-        <br />
+        </div>
         <button type="submit">Sign Up</button>
       </form>
     </div>
