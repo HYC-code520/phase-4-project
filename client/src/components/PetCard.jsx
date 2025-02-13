@@ -26,8 +26,18 @@ const PetCard = ({ pet, onImageClick, onToggleFavorite, favorites }) => {
       <p>Type: {pet.animal_type}</p>
       <p>Breed: {pet.breed}</p>
       <p>Status: {pet.adoption_status}</p>
-      <button onClick={handleFavoriteClick}>
-        {isFavorite ? 'Unfavorite' : 'Favorite'}
+      {/* Favorite button using heart emojis */}
+      <button
+        className="favorite-button"
+        onClick={handleFavoriteClick}
+        style={{
+          background: 'none',
+          border: 'none',
+          fontSize: '24px',
+          cursor: 'pointer'
+        }}
+      >
+        {isFavorite ? '❤️' : '🤍'}
       </button>
     </div>
   );
