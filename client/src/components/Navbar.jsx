@@ -5,7 +5,9 @@ function Navbar({ user, handleLogout }) {
   return (
     <nav className="navbar">
       <div className="nav-logo">
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">
+          <img src="/logo.png" alt="Logo" className="nav-logo-img" />
+        </NavLink>
       </div>
       <ul className="nav-links">
         <li><NavLink to="/dogs">Dogs</NavLink></li>
