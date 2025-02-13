@@ -35,10 +35,12 @@ const PetContainer = () => {
 
   const handlePetClick = (pet) => {
     setSelectedPet(pet);
+    window.scrollTo({ top: window.innerHeight * 4.0, behavior: 'smooth' }); // Scroll to top when a pet is selected
   };
 
   const handleBackClick = () => {
     setSelectedPet(null);
+    window.scrollTo({ top: window.innerHeight * 4.0, behavior: 'smooth' }); // Scroll to top when going back to the pet list
   };
 
   const handleToggleFavorite = (pet) => {
