@@ -48,6 +48,7 @@ class Pet(db.Model, SerializerMixin):
     breed = db.Column(db.String(50), nullable=False)
     img_url = db.Column(db.String(255), nullable=False)
     adoption_status = db.Column(db.String(50), nullable=False)
+    is_favorite = db.Column(db.Boolean, default=False)  
 
     # Relationships
     favorites = db.relationship('Favorite', back_populates='pet', cascade='all, delete-orphan')

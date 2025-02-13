@@ -54,21 +54,41 @@ if __name__ == '__main__':
 
         # Predefined list of unique cat image URLs
         cat_images = [
-            'https://media.istockphoto.com/id/1443562748/photo/cute-ginger-cat.jpg?s=612x612&w=0&k=20&c=vvM97wWz-hMj7DLzfpYRmY2VswTqcFEKkC437hxm3Cg=',
-            'https://media.istockphoto.com/id/1325997570/photo/bengal-cat-lying-on-sofa-and-smiling.jpg?s=612x612&w=0&k=20&c=U6HBa06jHDDZ4Wbd1GylTEybkvUCUaMf7blxCr-bon0=',
-            'https://www.shutterstock.com/image-photo/tabby-cat-raising-his-paw-600nw-2527053247.jpg',
-            'https://thumbs.dreamstime.com/b/funny-kitten-cat-standing-dancing-isolated-white-97402399.jpg',
-            'https://pbs.twimg.com/media/GSbK3FRWwAAiQTk?format=jpg&name=900x900',
-            'https://pbs.twimg.com/media/GFnyXaAWoAAlwFt?format=jpg&name=large',
-            'https://i.chzbgr.com/full/9675430400/h0E3A32E8/cat',
-            'https://i.pinimg.com/236x/15/a1/b3/15a1b3bd6ea045efdcbe9c14ee71ca6d.jpg',
-            'https://preview.redd.it/my-sisters-fucked-up-thing-v0-zue465liy63e1.jpg?width=640&crop=smart&auto=webp&s=ee479830d3fab7c464d512aa97f813ec7ad47c4c',
-            'https://assets.tiltify.com/uploads/media_type/image/203025/blob-09636982-a21a-494b-bbe4-3692c2720ae3.jpeg',
-            'https://i.redd.it/show-me-your-silly-cats-v0-wplu39sp6l1d1.jpg?width=4032&format=pjpg&auto=webp&s=9970c7152419d80629bc8a7e94ea556b9779f833',
-            'https://pethelpful.com/.image/w_3840,q_auto:good,c_fill,ar_4:3,g_xy_center,x_556,y_388/MjA4NDAwNTI1ODExNTI1MjY0/shutterstock_2251137885-1.png',
-            'https://img.freepik.com/free-photo/adorable-white-cat-sunglasses-shirt-lies-fabric-hammock-ai-generated_268835-10929.jpg',
-            'https://media.tenor.com/mNj1Gs5Kp-kAAAAM/cat-funny.gif',
-            'https://img-va.myshopline.com/image/store/1679367631642/image-(13).png?w=1024&h=1024'
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf9fTVDFL7KGGz5J-UeAFSsOMYGICdyHPqAA&s',
+            'https://live.staticflickr.com/7085/7215121222_75299b861b_z.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsjAuIr7UwYW6w-UA0ecQozgebmkEMI5me8Q&s',
+            'https://pbs.twimg.com/media/Dd6rQssV0AMZQeO.jpg:large',
+            'https://i.etsystatic.com/18172150/r/il/1c91c2/3962580509/il_570xN.3962580509_ln3c.jpg',
+            'https://www.sparklecat.com/wp-content/uploads/Summer052920cDSC09997.jpg',
+            'https://www.garagejournal.com/forum/media/i-wanted-a-new-avatar-so-i-googled-cat-and-bikini-this-is-what-i-got.67858/full',
+            'https://www.sparklecat.com/wp-content/uploads/Summer060720bIMG_7160.jpg',
+            'https://www.sparklecat.com/wp-content/uploads/Summer021522eDSC04150.jpg',
+            'https://files.idyllic.app/files/static/2198668?width=1080&optimizer=image',
+            'https://i.imgur.com/M6md8Mi_d.webp?maxwidth=520&shape=thumb&fidelity=high',
+            'https://avatars.mds.yandex.net/get-shedevrum/11473245/3818fc06b9d111ee8f749e327a4c855e/orig',
+            'https://m.media-amazon.com/images/I/71toevslMGL.jpg',
+            'https://www.sparklecat.com/wp-content/uploads/Summer100821fDSC08769.jpg',
+            'https://allcatsgood.com/cdn/shop/products/21824094.jpg?v=1661008362&width=1445',
+                    ]
+
+        dog_images = [
+            'https://i.imgur.com/8kGQnpx.jpg',
+            'https://lh3.googleusercontent.com/S2w5kk2QAM84OsTAVNH-r-YbSN1YO-KTc_DPkVYBIwp3n3gISnF7genRUUECp9sIGFqFYL_z7v9CwMNdAuVT_aS_=s900',
+            'https://i.redd.it/5jb8yc7u80n31.jpg',
+            'https://i.pinimg.com/474x/08/be/9d/08be9d836968e3e9023c832cf6ea8943.jpg',
+            'https://i.ebayimg.com/images/g/K4sAAOSw849jYDaf/s-l1200.jpg',
+            'https://img.buzzfeed.com/buzzfeed-static/static/2019-04/18/17/asset/buzzfeed-prod-web-05/sub-buzz-27054-1555622322-2.png?downsize=900:*&output-format=auto&output-quality=auto',
+            'https://us.123rf.com/450wm/masarik512/masarik5122305/masarik512230503040/204505669-seductive-passionate-dog-with-tongue-in-hoodie-with-devil-horns-on-red-background-puppy-in-fancy.jpg',
+            'https://m.media-amazon.com/images/I/61xBOOI760S.jpg',
+            'https://i.redd.it/u71z08ujmnwb1.jpg',
+            'https://m.media-amazon.com/images/I/71DCLvQSFuL._AC_UF1000,1000_QL80_.jpg',
+            'https://i.pinimg.com/736x/ed/fd/6d/edfd6d150f4966d57f4f17956330ba2c.jpg',
+            'https://i.pinimg.com/736x/98/c5/a2/98c5a2845b435c2162de8c428feaf842.jpg',
+            'https://img-va.myshopline.com/image/store/1690274988467/-4.jpeg?w=1200&h=1200',
+            'https://i.pinimg.com/736x/45/4b/21/454b21f7aa054d5e44f2527b25145a52.jpg',
+            'https://i.insider.com/5088100aeab8eaca7300000c?width=600&format=jpeg&auto=webp',
+            '',
+            
         ]
 
         # Generate random cats and dogs
@@ -83,14 +103,15 @@ if __name__ == '__main__':
             if animal == "Cat":
                 img_url = cat_images[i % len(cat_images)]  # Use predefined cat image URLs
             else:
-                img_url = f'https://placedog.net/200/300?id={randint(1, 50)}'
+                img_url = dog_images[i % len(dog_images)]  # Use predefined dog image URLs
             random_pet = Pet(
                 name=fake.first_name(),
                 age=randint(1, 15),
                 animal_type=animal,
                 breed=rc(breeds[animal]),
                 img_url=img_url,
-                adoption_status=rc(['Available', 'Adopted', 'Adoption pending'])
+                adoption_status=rc(['Available', 'Adoption pending']),
+                is_favorite=False # Add this line
             )
             db.session.add(random_pet)
         
