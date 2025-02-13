@@ -10,19 +10,17 @@ function Navbar({ user, handleLogout }) {
       <ul className="nav-links">
         <li><NavLink to="/dogs">Dogs</NavLink></li>
         <li><NavLink to="/cats">Cats</NavLink></li>
-        {
-          user?.is_admin
-          ?
-          <li><NavLink to="/adoption-applications">Adoption Applications</NavLink></li>
-          :
-          null
-        }
-        <li><NavLink to="/favorites">❤</NavLink></li>
+
+        {/* Only show the Adoption Applications link for admin users */}
+        {user?.is_admin && <li><NavLink to="/adoption-applications">Adoption Applications</NavLink></li>}
+
+        {/* Show Favorites button for logged-in users */}
+        {user && <li><NavLink to="/favorites">Favorites</NavLink></li>}
 
         {user ? (
           <>
             <li>Hello, {user.name}!</li>
-            <li><button onClick={handleLogout}>Logout</button></li>
+            <li><button onClick={handleLogout}>Logout</button></li> 
           </>
         ) : (
           <>
