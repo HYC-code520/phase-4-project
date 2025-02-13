@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  width: 100%; /* Full width */
   margin: 0 auto;
   padding: 0;
   text-align: center;
@@ -17,7 +17,7 @@
 }
 
 footer {
-  background: #9cbff3;
+  background: #000000;
   color: white;
   padding: 1rem;
   text-align: center;
@@ -79,4 +79,43 @@ footer {
 
 button {
   margin-bottom: 20px;
+}
+
+
+.home-intro img {
+  width: 100vw;  /* Use the full width of the viewport */
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.home-intro {
+  position: relative;
+}
+
+.clickable-area {
+  position: absolute;
+  cursor: pointer;
+}
+
+.dogs {
+  top: 87%;  /* Adjust the position to cover the dog section */
+  left: 18%;
+  width: 20%;
+  height: 10%;
+}
+
+.cats {
+  top: 87%;  /* Adjust the position to cover the cat section */
+  left: 41%;
+  width: 20%;
+  height: 10%;
+}
+
+.favorites {
+  top: 87%;  /* Adjust the position to cover the favorites section */
+  left: 63%;
+  width: 20%;
+  height: 10%;
 }
