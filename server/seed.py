@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Pet
+from models import db, User, Pet, AdoptionForm
 
 if __name__ == '__main__':
     fake = Faker()
@@ -16,11 +16,14 @@ if __name__ == '__main__':
     with app.app_context():
         print("Starting seed...")
 
+        AdoptionForm.query.delete()
         Pet.query.delete()
+        User.query.filter(User.email != "admin@example.com").delete()
 
         # Create admin user (only if not already present)
         admin_email = "admin@example.com"
         admin = User.query.filter_by(email=admin_email).first()
+        
 
         if not admin:
             admin = User(
@@ -32,6 +35,22 @@ if __name__ == '__main__':
             admin.password = "adminpassword"  # Uses the Flask-Bcrypt setter
             db.session.add(admin)
             print("Admin user created!")
+
+
+        # Generate 10 random non-admin users
+        for i in range(10):
+            user = User(
+                name=fake.name(),
+                email=fake.unique.email(),
+                age=randint(18, 65),
+                is_admin=False
+            )
+            user.password = "password123"  # Default password for all users
+            db.session.add(user)
+        
+        db.session.commit()
+        print("10 random users created!")
+
 
         # Predefined list of unique cat image URLs
         cat_images = [
@@ -74,6 +93,47 @@ if __name__ == '__main__':
                 adoption_status=rc(['Available', 'Adopted', 'Adoption pending'])
             )
             db.session.add(random_pet)
+        
+        db.session.commit()
+        print("30 pets have been created!")
+
+        # Generate 6 adoption applications with non-admin users only
+        non_admin_users = User.query.filter_by(is_admin=False).all()
+        pets = Pet.query.filter(Pet.adoption_status == 'Available').all()
+
+        if len(non_admin_users) == 0 or len(pets) == 0:
+            print("You need some users and pets in the database first.")
+        else:
+            for _ in range(6):  # Generate 6 adoption applications
+                applicant = rc(non_admin_users)
+                pet_to_adopt = rc(pets)
+
+                new_application = AdoptionForm(
+                    full_name=applicant.name,
+                    age=applicant.age,
+                    email=applicant.email,
+                    phone_number=fake.phone_number(),
+                    address=fake.address(),
+                    city=fake.city(),
+                    state=fake.state_abbr(),
+                    zip_code=fake.zipcode(),
+                    residence_type=rc(["House", "Apartment", "Townhouse"]),
+                    family_members=randint(1, 6),
+                    has_other_pets=rc([True, False]),
+                    pet_alone_hours=randint(0, 8),
+                    pet_sleeping_place=rc(["Inside", "Outside", "Pet House"]),
+                    has_previous_adoption=rc([True, False]),
+                    reason_for_adoption=fake.text(max_nb_chars=100),
+                    landlord_permission=rc([True, False]),
+                    user_id=applicant.id,
+                    pet_id=pet_to_adopt.id,
+                    submitted_at=fake.date_time_this_year(),
+                    status=rc(["pending", "approved", "rejected"])
+                )
+                db.session.add(new_application)
+
+            db.session.commit()
+            print("6 adoption applications have been created!")
 
         db.session.commit()
         print("Seeding complete!")
