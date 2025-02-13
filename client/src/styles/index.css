@@ -24,15 +24,19 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
   display: block;
   min-width: 320px;
   min-height: 100vh;
+  background-color: black; /* Set the entire website background to black */
+  color: white; /* Ensure text is readable */
 }
+
 
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
+  line-height: 0.5;
 }
 
 button {

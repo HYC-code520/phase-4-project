@@ -9,11 +9,20 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: black; /* Black background for the main container */
 }
 
 .main-content {
   flex: 1;
   padding: 2rem;
+  background-color: black; /* Ensure the content area is also black */
+  color: white; /* Adjust text color for readability */
+}
+
+.main-content img {
+  display: block;  /* Ensures no spacing between images */
+  margin: 0;
+  padding: 0;
 }
 
 footer {
@@ -23,25 +32,29 @@ footer {
   text-align: center;
 }
 
+.pet-container {
+  padding: 20px;
+}
+
+
+
 .pet-cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensure three cards per row */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 20px;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .pet-card-container {
   display: flex;
   justify-content: center;
-  align-items: center; /* Center the content vertically */
 }
 
 .pet-card {
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 10px;
-  width: 200px;
+  width: 500px;
   text-align: center;
 }
 
@@ -60,21 +73,47 @@ footer {
   margin-left: 10px;
 }
 
+
+
 .selected-pet-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensure three columns */
+  grid-template-columns: 1fr 1fr; /* Two equal columns for larger screens */
   gap: 20px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  align-items: start; /* Align items at the top */
 }
 
 .selected-pet {
-  grid-column: 1 / 2; /* Place in the left column */
+  grid-column: 1 / 2; /* Stay in the first column */
 }
 
 .adoption-form {
-  grid-column: 2 / 3; /* Place in the center column */
+  width: 80%;
+  max-width: 600px;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.adoption-page {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.adoption-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 button {
@@ -83,15 +122,16 @@ button {
 
 
 .home-intro img {
-  width: 100vw;  /* Use the full width of the viewport */
+  display: block;  /* Removes the gap between images */
+  width: 100%;
   height: auto;
-  display: block;
   margin: 0;
   padding: 0;
 }
 
 .home-intro {
-  position: relative;
+  padding: 0;
+  margin: 0;
 }
 
 .clickable-area {
@@ -136,10 +176,11 @@ button {
   background-color: #c1731e;
 }
 
+
 .image-container {
   position: relative;
-  display: inline-block;
-  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .signup-button {
@@ -155,15 +196,16 @@ button {
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7); /* Right corner shadow */
   transition: all 0.3s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+
 .signup-button::before {
-  content: '✭'; /* White sparkle effect */
+  content: '✩'; /* White sparkle effect */
   margin-right: 8px;
   font-size: 1.2rem;
   color: white;
@@ -174,3 +216,88 @@ button {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 40px rgba(255, 255, 255, 0.5);
   transform: translate(-50%, -50%) scale(1.05); /* Slight scale-up effect */
 }
+
+.adoption-form-container {
+  grid-column: 2 / 3; /* Stay in the second column */
+  max-width: 1000px;
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+
+
+.adoption-form h2 {
+  text-align: center;
+  color: #e79522;
+}
+
+.adoption-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.adoption-form input,
+.adoption-form select,
+.adoption-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+}
+
+.adoption-form button {
+  background-color: #e79522;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+
+.adoption-form button:hover {
+  background-color: #c1731e;
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+  .adoption-form {
+    width: 90%; /* Make the form take up more width */
+  }
+
+  .adoption-form button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adoption-form {
+    width: 100%; /* Full width on very small screens */
+    padding: 15px;
+  }
+
+  .adoption-form input,
+  .adoption-form select,
+  .adoption-form textarea {
+    font-size: 0.9rem;
+  }
+
+  .adoption-form button {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+}
+

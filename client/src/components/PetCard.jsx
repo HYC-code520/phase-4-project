@@ -37,7 +37,7 @@ const PetCard = ({ pet, onImageClick, onToggleFavorite, favorites }) => {
           cursor: 'pointer'
         }}
       >
-        {isFavorite ? '❤️' : '🤍'}
+        {isFavorite ? '🧡' : '🤍'}
       </button>
     </div>
   );
