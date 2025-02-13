@@ -37,6 +37,16 @@ function App() {
           alt="Home Page brings you to dogs and cats page" 
           style={{ maxWidth: "100%", height: "auto", marginTop: "20px" }} 
         />
+         {/* Clickable areas on the image */}
+         <Link to="/dogs">
+          <div className="clickable-area dogs" />
+        </Link>
+        <Link to="/cats">
+          <div className="clickable-area cats" />
+        </Link>
+        <Link to="/favorites">
+          <div className="clickable-area favorites" />
+        </Link>
       </div>
 
       <main className="main-content">
