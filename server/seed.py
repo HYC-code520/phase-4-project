@@ -64,7 +64,7 @@ if __name__ == '__main__':
             'https://www.sparklecat.com/wp-content/uploads/Summer060720bIMG_7160.jpg',
             'https://www.sparklecat.com/wp-content/uploads/Summer021522eDSC04150.jpg',
             'https://files.idyllic.app/files/static/2198668?width=1080&optimizer=image',
-            'https://i.imgur.com/M6md8Mi_d.webp?maxwidth=520&shape=thumb&fidelity=high',
+            'https://cdn.shopify.com/s/files/1/0579/2097/9144/files/fang-and-fur-sexy-pinup-cat.jpg?v=1633927909',
             'https://avatars.mds.yandex.net/get-shedevrum/11473245/3818fc06b9d111ee8f749e327a4c855e/orig',
             'https://m.media-amazon.com/images/I/71toevslMGL.jpg',
             'https://www.sparklecat.com/wp-content/uploads/Summer100821fDSC08769.jpg',
@@ -72,7 +72,7 @@ if __name__ == '__main__':
                     ]
 
         dog_images = [
-            'https://i.imgur.com/8kGQnpx.jpg',
+            'https://i.pinimg.com/736x/dd/00/8c/dd008c69b2696c24c3d37983fb30e964.jpg',
             'https://lh3.googleusercontent.com/S2w5kk2QAM84OsTAVNH-r-YbSN1YO-KTc_DPkVYBIwp3n3gISnF7genRUUECp9sIGFqFYL_z7v9CwMNdAuVT_aS_=s900',
             'https://i.redd.it/5jb8yc7u80n31.jpg',
             'https://i.pinimg.com/474x/08/be/9d/08be9d836968e3e9023c832cf6ea8943.jpg',
@@ -87,7 +87,7 @@ if __name__ == '__main__':
             'https://img-va.myshopline.com/image/store/1690274988467/-4.jpeg?w=1200&h=1200',
             'https://i.pinimg.com/736x/45/4b/21/454b21f7aa054d5e44f2527b25145a52.jpg',
             'https://i.insider.com/5088100aeab8eaca7300000c?width=600&format=jpeg&auto=webp',
-            '',
+            
             
         ]
 
