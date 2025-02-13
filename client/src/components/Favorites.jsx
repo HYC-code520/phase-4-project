@@ -6,17 +6,19 @@ function Favorites() {
   const { user } = useOutletContext();
   const [favorites, setFavorites] = useState([]);
 
-  // Fetch the current user's favorites
   useEffect(() => {
     if (user) {
       fetch(`/api/favorites?user_id=${user.id}`, { credentials: "include" })
         .then((response) => response.json())
-        .then((data) => setFavorites(data))
+        .then((data) => {
+          const uniqueFavorites = Array.from(new Set(data.map(fav => fav.pet.id)))
+            .map(id => data.find(fav => fav.pet.id === id));
+          setFavorites(uniqueFavorites);
+        })
         .catch((error) => console.error("Error fetching favorites:", error));
     }
   }, [user]);
 
-  // Handler to unfavorite from Favorites page
   const handleToggleFavorite = (pet) => {
     const favorite = favorites.find(fav => fav.pet.id === pet.id);
     if (favorite) {
@@ -38,15 +40,15 @@ function Favorites() {
   }
 
   return (
-    <div>
+    <div className="favorites-page">
       <h2>Your Favorites</h2>
       <div className="pet-cards-container">
         {favorites.map(fav => (
           <PetCard 
-            key={fav.pet.id} 
-            pet={fav.pet} 
-            favorites={favorites} 
-            onToggleFavorite={handleToggleFavorite} 
+            key={`${fav.id}-${fav.pet.id}`}
+            pet={fav.pet}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
           />
         ))}
       </div>

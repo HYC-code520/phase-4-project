@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOutletContext } from "react-router-dom";
 import PetCard from './PetCard';
 import FilterBar from './FilterBar';
@@ -46,42 +46,34 @@ const PetContainer = () => {
       alert("Please log in to favorite pets");
       return;
     }
-    // Use functional update for favorites state
-    setFavorites((prevFavorites) => {
-      const existingFavorite = prevFavorites.find(fav => fav.pet.id === pet.id);
-      if (existingFavorite) {
-        // Unfavorite: call DELETE endpoint
-        fetch(`/api/favorites/${existingFavorite.id}`, {
-          method: "DELETE",
-          credentials: "include"
+
+    const existingFavorite = favorites.find(fav => fav.pet.id === pet.id);
+    if (existingFavorite) {
+      fetch(`/api/favorites/${existingFavorite.id}`, {
+        method: "DELETE",
+        credentials: "include"
+      })
+        .then(res => {
+          if (res.ok) {
+            setFavorites(prev => prev.filter(fav => fav.id !== existingFavorite.id));
+          }
         })
-          .then(res => {
-            if (res.ok) {
-              // Remove the unfavorited pet from state
-              setFavorites(prev => prev.filter(fav => fav.id !== existingFavorite.id));
-            }
-          })
-          .catch(err => console.error("Error unfavoriting:", err));
-        return prevFavorites; // Return unchanged immediately; deletion will update state below
-      } else {
-        // Favorite: call POST endpoint
-        fetch("/api/favorites", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ user_id: user.id, pet_id: pet.id })
+        .catch(err => console.error("Error unfavoriting:", err));
+    } else {
+      fetch("/api/favorites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ user_id: user.id, pet_id: pet.id })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (!data.error) {
+            setFavorites(prev => [...prev, data]);
+          }
         })
-          .then(res => res.json())
-          .then(data => {
-            if (!data.error) {
-              // Use functional update to add new favorite
-              setFavorites(prev => [...prev, data]);
-            }
-          })
-          .catch(err => console.error("Error favoriting:", err));
-        return prevFavorites;
-      }
-    });
+        .catch(err => console.error("Error favoriting:", err));
+    }
   };
 
   return (
@@ -103,8 +95,8 @@ const PetContainer = () => {
             </div>
           </div>
         ) : (
-          filteredPets.map(pet => (
-            <div key={pet.id} className="pet-card-container">
+          filteredPets.map((pet, index) => (
+            <div key={`${pet.id}-${index}`} className="pet-card-container">
               <PetCard 
                 pet={pet} 
                 onImageClick={handlePetClick} 

@@ -32,6 +32,9 @@ function AdoptionApplications() {
             <h3 className="applicant-name">{app.full_name}</h3>
             <p><strong>Status:</strong> {app.status}</p>
             <p><strong>Email:</strong> {app.email}</p>
+            <p>
+              <strong>Applied for:</strong> {app.pet.name} ({app.pet.animal_type} - {app.pet.breed})
+            </p>
             <button
               className="toggle-button"
               onClick={() => toggleDetails(app.id)}
