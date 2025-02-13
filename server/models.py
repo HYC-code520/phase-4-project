@@ -34,6 +34,9 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
+    #  Exclude recursive fields when serializing
+    serialize_rules = ("-favorites.user", "-password_hash")
+
 # Pet model - Represents animals available for adoption
 class Pet(db.Model, SerializerMixin):
     __tablename__ = 'pets'
@@ -50,6 +53,10 @@ class Pet(db.Model, SerializerMixin):
     favorites = db.relationship('Favorite', back_populates='pet', cascade='all, delete-orphan')
     adoption_forms = db.relationship('AdoptionForm', back_populates='pet')
 
+    #  Exclude recursive fields when serializing
+    serialize_rules = ("-favorites.pet", "-adoption_forms.pet")
+
+
 # Favorite model - Stores favorite pets saved by users (Many-to-Many relationship)
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
@@ -61,6 +68,9 @@ class Favorite(db.Model, SerializerMixin):
     # Relationships
     user = db.relationship('User', back_populates='favorites')
     pet = db.relationship('Pet', back_populates='favorites')
+
+     # Prevent circular reference when serializing
+    serialize_rules = ("-user.favorites", "-pet.favorites")
 
 # AdoptionForm model - Stores adoption application details submitted by users
 class AdoptionForm(db.Model, SerializerMixin):
