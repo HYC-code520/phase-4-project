@@ -11,22 +11,12 @@ function Navbar({ user, handleLogout }) {
         <li><NavLink to="/dogs">Dogs</NavLink></li>
         <li><NavLink to="/cats">Cats</NavLink></li>
 
-        {/* below code show applications button to the admin only */}
-        {
-          user?.is_admin
-          ?
-          <li><NavLink to="/adoption-applications">Adoption Applications</NavLink></li>
-          :
-          null
-        }
+        {/* Only show the Adoption Applications link for admin users */}
+        {user?.is_admin && <li><NavLink to="/adoption-applications">Adoption Applications</NavLink></li>}
 
-        {
-          user?
-          <li><NavLink to="/favorites">❤</NavLink></li>
-          :
-          null
-        }
-        
+        {/* Show Favorites button for logged-in users */}
+        {user && <li><NavLink to="/favorites">Favorites</NavLink></li>}
+
         {user ? (
           <>
             <li>Hello, {user.name}!</li>
