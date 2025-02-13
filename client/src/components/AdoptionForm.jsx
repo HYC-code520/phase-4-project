@@ -100,106 +100,75 @@ function AdoptionForm({ petName }) {
   
   
   return (
-    <div>
-      <h2>Adoption Form</h2>
-      {isSubmitted && <p style={{ color: "green" }}>Form submitted successfully!</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Pet Name:
-          <input type="text" name="petName" value={formData.petName} onChange={handleChange} readOnly />
-          Full Name:
-          <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} />
-          {errors.full_name && <p style={{ color: "red" }}>{errors.full_name}</p>}
-        </label>
-        <br />
-        <label>
-          Age:
-          <input type="number" name="age" value={formData.age} onChange={handleChange} />
-          {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
-        </label>
-        <br />
+    <div className="adoption-form-container">
+      <form className="adoption-form" onSubmit={handleSubmit}>
+        <h2>Adoption Form</h2>
+        {isSubmitted && <p style={{ color: "green" }}>Form submitted successfully!</p>}
+        
+        <label>Pet Name:</label>
+        <input type="text" name="petName" value={formData.petName} onChange={handleChange} readOnly />
+        
+        <label>Full Name:</label>
+        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+        {errors.fullName && <p style={{ color: "red" }}>{errors.fullName}</p>}
 
-        <label>
-          Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-        </label>
-        <br />
-        <label>
-          Phone Number:
-          <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
-          {errors.phone_number && <p style={{ color: "red" }}>{errors.phone_number}</p>}
-        </label>
-        <br />
-        <label>
-          Address:
-          <input type="text" name="address" value={formData.address} onChange={handleChange} />
-          {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
-        </label>
-        <br />
-        <label>
-          City:
-          <input type="text" name="city" value={formData.city} onChange={handleChange} />
-          {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
-        </label>
-        <br />
-        <label>
-          State:
-          <input type="text" name="state" value={formData.state} onChange={handleChange} />
-          {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
-        </label>
-        <br />
-        <label>
-          Zip Code:
-          <input type="text" name="zip_code" value={formData.zip_code} onChange={handleChange} />
-          {errors.zip_code && <p style={{ color: "red" }}>{errors.zip_code}</p>}
-        </label>
-        <br />
-        <label>
-          Type of Residence:
-          <select name="residence_type" value={formData.residence_type} onChange={handleChange}>
-            <option value="house">House</option>
-            <option value="apartment">Apartment</option>
-            <option value="condo">Condo</option>
-          </select>
-        </label>
-        <br />
-        <label>
-          Number of Household Members:
-          <input type="number" name="family_members" value={formData.family_members} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Do you have other pets?
-          <input type="checkbox" name="has_other_pets" checked={formData.has_other_pets} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          How many hours per day will the pet be alone?
-          <input type="number" name="pet_alone_hours" value={formData.pet_alone_hours} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Where will the pet sleep?
-          <input type="text" name="pet_sleeping_place" value={formData.pet_sleeping_place} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Have you adopted a pet before?
-          <input type="checkbox" name="has_previous_adoption" checked={formData.has_previous_adoption} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Reason for Adoption:
-          <textarea name="reason_for_adoption" value={formData.reason_for_adoption} onChange={handleChange} />
-          {errors.reason_for_adoption && <p style={{ color: "red" }}>{errors.reason_for_adoption}</p>}
-        </label>
-        <br />
-        <label>
-          Do you have landlord permission?
-          <input type="checkbox" name="landlord_permission" checked={formData.landlord_permission} onChange={handleChange} />
-        </label>
-        <br />
+        <label>Age:</label>
+        <input type="number" name="age" value={formData.age} onChange={handleChange} />
+        {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
+
+        <label>Email:</label>
+        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+
+        <label>Phone Number:</label>
+        <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+        {errors.phoneNumber && <p style={{ color: "red" }}>{errors.phoneNumber}</p>}
+
+        <label>Address:</label>
+        <input type="text" name="address" value={formData.address} onChange={handleChange} />
+        {errors.address && <p style={{ color: "red" }}>{errors.address}</p>}
+
+        <label>City:</label>
+        <input type="text" name="city" value={formData.city} onChange={handleChange} />
+        {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
+
+        <label>State:</label>
+        <input type="text" name="state" value={formData.state} onChange={handleChange} />
+        {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
+
+        <label>Zip Code:</label>
+        <input type="text" name="zipCode" value={formData.zipCode} onChange={handleChange} />
+        {errors.zipCode && <p style={{ color: "red" }}>{errors.zipCode}</p>}
+
+        <label>Type of Residence:</label>
+        <select name="residence_type" value={formData.residence_type} onChange={handleChange}>
+          <option value="house">House</option>
+          <option value="apartment">Apartment</option>
+          <option value="condo">Condo</option>
+        </select>
+
+        <label>Number of Household Members:</label>
+        <input type="number" name="family_members" value={formData.family_members} onChange={handleChange} />
+
+        <label>Do you have other pets?</label>
+        <input type="checkbox" name="has_other_pets" checked={formData.has_other_pets} onChange={handleChange} />
+
+        <label>How many hours per day will the pet be alone?</label>
+        <input type="number" name="pet_alone_hours" value={formData.pet_alone_hours} onChange={handleChange} />
+
+        <label>Where will the pet sleep?</label>
+        <input type="text" name="pet_sleeping_place" value={formData.pet_sleeping_place} onChange={handleChange} />
+
+        <label>Have you adopted a pet before?</label>
+        <input type="checkbox" name="has_previous_adoption" checked={formData.has_previous_adoption} onChange={handleChange} />
+
+        <label>Reason for Adoption:</label>
+        <textarea name="reason_for_adoption" value={formData.reason_for_adoption} onChange={handleChange} />
+        {errors.reason_for_adoption && <p style={{ color: "red" }}>{errors.reason_for_adoption}</p>}
+
+        <label>Do you have landlord permission?</label>
+        <input type="checkbox" name="landlord_permission" checked={formData.landlord_permission} onChange={handleChange} />
+
         <button type="submit">Submit Application</button>
       </form>
     </div>
