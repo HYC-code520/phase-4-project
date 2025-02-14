@@ -62,6 +62,8 @@ function AdoptionForm({ petName }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formErrors = validateForm();
+    
+    console.log("Form errors:", formErrors);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
@@ -81,6 +83,7 @@ function AdoptionForm({ petName }) {
         body: JSON.stringify(formDataWithUserId),
       })
         .then((response) => {
+          console.log("Response:", response); // Add this here
           if (!response.ok) {
             throw new Error('Failed to submit the form.');
           }
@@ -109,8 +112,8 @@ function AdoptionForm({ petName }) {
         <input type="text" name="petName" value={formData.petName} onChange={handleChange} readOnly />
         
         <label>Full Name:</label>
-        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
-        {errors.fullName && <p style={{ color: "red" }}>{errors.fullName}</p>}
+        <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} />
+        {errors.full_name && <p style={{ color: "red" }}>{errors.full_name}</p>}
 
         <label>Age:</label>
         <input type="number" name="age" value={formData.age} onChange={handleChange} />
@@ -121,8 +124,8 @@ function AdoptionForm({ petName }) {
         {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
 
         <label>Phone Number:</label>
-        <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-        {errors.phoneNumber && <p style={{ color: "red" }}>{errors.phoneNumber}</p>}
+        <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
+        {errors.phone_number && <p style={{ color: "red" }}>{errors.phone_number}</p>}
 
         <label>Address:</label>
         <input type="text" name="address" value={formData.address} onChange={handleChange} />
@@ -137,8 +140,8 @@ function AdoptionForm({ petName }) {
         {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
 
         <label>Zip Code:</label>
-        <input type="text" name="zipCode" value={formData.zipCode} onChange={handleChange} />
-        {errors.zipCode && <p style={{ color: "red" }}>{errors.zipCode}</p>}
+        <input type="text" name="zip_code" value={formData.zip_code} onChange={handleChange} />
+        {errors.zip_code && <p style={{ color: "red" }}>{errors.zip_code}</p>}
 
         <label>Type of Residence:</label>
         <select name="residence_type" value={formData.residence_type} onChange={handleChange}>

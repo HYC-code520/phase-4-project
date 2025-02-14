@@ -16,9 +16,17 @@ const PetCard = ({ pet, onImageClick, onToggleFavorite, favorites }) => {
     }
   };
 
+  const handleImageClick = (e) => {
+    e.preventDefault();
+    e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scrolls the pet card into view
+    if (onImageClick) {
+      onImageClick(pet);
+    }
+  };
+
   return (
     <div className="pet-card">
-      <div onClick={onImageClick ? () => onImageClick(pet) : undefined}>
+      <div onClick={handleImageClick}>
         <img src={pet.img_url} alt={pet.name} />
       </div>
       <h2>{pet.name}</h2>
@@ -26,7 +34,6 @@ const PetCard = ({ pet, onImageClick, onToggleFavorite, favorites }) => {
       <p>Type: {pet.animal_type}</p>
       <p>Breed: {pet.breed}</p>
       <p>Status: {pet.adoption_status}</p>
-      {/* Favorite button using heart emojis */}
       <button
         className="favorite-button"
         onClick={handleFavoriteClick}
@@ -34,7 +41,7 @@ const PetCard = ({ pet, onImageClick, onToggleFavorite, favorites }) => {
           background: 'none',
           border: 'none',
           fontSize: '24px',
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
       >
         {isFavorite ? '🧡' : '🤍'}
